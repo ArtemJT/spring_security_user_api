@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "user_details")
-public class UserDetails {
+public class UsersDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +30,9 @@ public class UserDetails {
 
     @Column
     private String address;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private Users users;
+
 }

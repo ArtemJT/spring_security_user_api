@@ -1,4 +1,4 @@
-package com.example.hw_28_spring_boot_web.utilities;
+package com.spring_security.user_api;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -8,12 +8,24 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Logger {
 
-    public static String logResponse(String response) {
-        log.info(response);
-        return response;
+    public static void logMessage(String message) {
+        log.info(message);
+    }
+
+    public static void logException(String exceptionMsg) {
+        log.error("An error occurred: {{}}", exceptionMsg);
     }
 
     public static void logInvokedMethod() {
-        log.info("METHOD {{}} WAS CALLED", Thread.currentThread().getStackTrace()[2].getMethodName());
+        log.info("Calling a method: [{}.{}]",
+                Thread.currentThread().getStackTrace()[2].getClassName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName());
+    }
+
+    public static void logInvokedMethod(String userName) {
+        log.info("User [{}] calling a method: [{}.{}]",
+                userName,
+                Thread.currentThread().getStackTrace()[2].getClassName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName());
     }
 }

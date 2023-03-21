@@ -1,28 +1,22 @@
-package com.spring_security.user_api.model;
+package com.spring_security.user_api.dto;
 
-import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * @author Artem Kovalov on 17.03.2023
  */
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@Entity
-@Table(name = "user")
-public class Users {
+public class UsersDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    private String userName;
+
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "user_details_id")
-    private UserDetails userDetails;
+    private UsersDetailsDto usersDetailsDto;
 }

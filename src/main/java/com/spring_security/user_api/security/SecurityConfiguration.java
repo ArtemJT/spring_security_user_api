@@ -1,7 +1,7 @@
-package com.example.my_store__pet_project.security;
+package com.spring_security.user_api.security;
 
-import com.example.my_store__pet_project.enums.UserRole;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,13 +12,27 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.SecurityContextRepository;
 
+/**
+ * @author Artem Kovalov on 17.03.2023
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
+    private final SecurityContextRepository securityContextRepository;
+
+    @Value("${url.login}")
+    private String loginUrl;
+
+    @Value("${url.registration}")
+    private String registrationUrl;
+
+    @Value("${url.success}")
+    private String successUrl;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -36,28 +50,23 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/admin", "/products/addProduct", "/customers").hasAuthority(UserRole.ADMIN.name())
-                .requestMatchers("/orders").hasAuthority(UserRole.USER.name())
-                .requestMatchers("/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/auth/login")
-                .defaultSuccessUrl("/greeting")
-                .permitAll()
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/auth/403")
-                .and()
-                .logout()
-                .logoutSuccessUrl("/")
-                .permitAll();
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                .csrf().disable()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(registrationUrl).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(login -> login
+                        .loginPage(loginUrl)
+                        .defaultSuccessUrl(successUrl)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .invalidateHttpSession(false)
+                        .logoutSuccessUrl(loginUrl)
+                        .permitAll()
+                )
+                .securityContext(context -> context.securityContextRepository(securityContextRepository));
 
         return http.build();
     }

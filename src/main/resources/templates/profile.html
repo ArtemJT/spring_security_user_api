@@ -5,6 +5,8 @@
 </head>
 <body>
 <h2>Profile</h2>
+<!--/*@thymesVar id="message" type="com.spring_security.user_api.controller.ProfileController"*/-->
+<h4 th:if="${message != null}" th:text="${message}"></h4>
 
 <!--/*@thymesVar id="user" type="com.spring_security.user_api.dto.UsersDto"*/-->
 <ul th:if="${user != null}" th:object="${user}">

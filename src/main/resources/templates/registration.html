@@ -6,9 +6,7 @@
 <body>
 <h2>Create user</h2>
 <!--/*@thymesVar id="message" type="com.spring_security.user_api.controller.AuthenticationController"*/-->
-<div th:if="${message != null}">
-    <h4 th:text="${message}"></h4>
-</div>
+<h4 th:if="${message != null}" th:text="${message}"></h4>
 
 <div>
 <!--    <form th:action="@{/auth/registration}" method="post" th:object="${user}">-->
@@ -26,7 +24,7 @@
                 <div><label> User Name : <input type="text" th:field="*{userName}" placeholder="Required"/> </label></div>
                 <div><label> Password: <input type="password" th:field="*{password}" placeholder="Required"/> </label></div>
             </th:block>
-            <div><label> Repeat Password: <input type="password" name="passwordRepeat" placeholder="Required"/> </label></div>
+            <div><label> Repeat Password: <input type="password" name="repeatedPass" placeholder="Required"/> </label></div>
             <!--/*@thymesVar id="userDetails" type="com.spring_security.user_api.dto.UsersDetailsDto"*/-->
             <th:block th:object="${userDetails}">
                 <div><label> First Name: <input type="text" th:field="*{firstName}" placeholder="Required"/> </label></div>
