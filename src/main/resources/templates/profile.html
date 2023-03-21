@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Profile</title>
+</head>
+<body>
+<h2>Profile</h2>
+
+<!--/*@thymesVar id="user" type="com.spring_security.user_api.dto.UsersDto"*/-->
+<ul th:if="${user != null}" th:object="${user}">
+    <li><span th:text="'User ID: ' + *{id}"/></li>
+    <li><span th:text="*{userName}"/></li>
+    <li><span th:text="*{password}"/></li>
+    <li><br></li>
+    <li><span th:text="'UserDetails ID: ' + *{usersDetailsDto.id}"/></li>
+    <li><span th:text="*{usersDetailsDto.firstName}"/></li>
+    <li><span th:text="*{usersDetailsDto.lastName}"/></li>
+    <li><span th:if="*{usersDetailsDto.middleName != null}" th:text="*{usersDetailsDto.middleName}"/></li>
+    <li><span th:text="*{usersDetailsDto.address}"/></li>
+</ul>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Registration</title>
+</head>
+<body>
+<h2>Create user</h2>
+<!--/*@thymesVar id="message" type="com.spring_security.user_api.controller.AuthenticationController"*/-->
+<div th:if="${message != null}">
+    <h4 th:text="${message}"></h4>
+</div>
+
+<div>
+<!--    <form th:action="@{/auth/registration}" method="post" th:object="${user}">-->
+    <form th:action="@{/registration}" method="post">
+        <div>
+<!--            <div><label> User Name : <input type="text" name="userName" placeholder="Required"/> </label></div>-->
+<!--            <div><label> Password: <input type="password" name="password" placeholder="Required"/> </label></div>-->
+<!--            <div><label> Repeat Password: <input type="password" name="passwordRepeat" placeholder="Required"/> </label></div>-->
+<!--            <div><label> First Name: <input type="text" name="firstName" placeholder="Required"/> </label></div>-->
+<!--            <div><label> Last Name: <input type="text" name="lastName" placeholder="Required"/> </label></div>-->
+<!--            <div><label> Middle Name: <input type="text" name="middleName" placeholder="Optional"/> </label></div>-->
+<!--            <div><label> Address: <input type="text" name="address" placeholder="Required"/> </label></div>-->
+            <!--/*@thymesVar id="user" type="com.spring_security.user_api.dto.UsersDto"*/-->
+            <th:block th:object="${user}">
+                <div><label> User Name : <input type="text" th:field="*{userName}" placeholder="Required"/> </label></div>
+                <div><label> Password: <input type="password" th:field="*{password}" placeholder="Required"/> </label></div>
+            </th:block>
+            <div><label> Repeat Password: <input type="password" name="passwordRepeat" placeholder="Required"/> </label></div>
+            <!--/*@thymesVar id="userDetails" type="com.spring_security.user_api.dto.UsersDetailsDto"*/-->
+            <th:block th:object="${userDetails}">
+                <div><label> First Name: <input type="text" th:field="*{firstName}" placeholder="Required"/> </label></div>
+                <div><label> Last Name: <input type="text" th:field="*{lastName}" placeholder="Required"/> </label></div>
+                <div><label> Middle Name: <input type="text" th:field="*{middleName}" placeholder="Optional"/> </label></div>
+                <div><label> Address: <input type="text" th:field="*{address}" placeholder="Required"/> </label></div>
+            </th:block>
+            <div><input type="submit" th:value="'Register'"/></div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
